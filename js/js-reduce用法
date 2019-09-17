@@ -1,1 +1,34 @@
+1、语法：
+arr.reduce(function(prev,cur,index,arr){
+  ...
+}, init);
 
+arr   表示原数组；
+prev  表示上一次调用回调时的返回值，或者初始值 init;
+cur   表示当前正在处理的数组元素；
+index 表示当前正在处理的数组元素的索引，若提供 init 值，则索引为0，否则索引为1；
+init  表示初始值。
+常用的参数只有两个：prev 和 cur。
+2、例子：
+（1）求和
+  var arr = [12,52,25,36，12,22,4];
+  var sum = arr.reduce(function (prev, cur) {
+      return prev + cur;
+  },0);
+  //说明：传入了初始值0，所以开始时prev的值为0，cur的值为数组第一项3
+  // 相加之后返回值为3作为下一轮回调的prev值，然后再继续与下一个数组项相加
+  // 以此类推，直至完成所有数组项的和并返回。
+（2）数组name去重并累加对应数值
+   let result = arr.reduce((obj, item) => {
+        if (!obj[item.name]) {
+            obj[item.name] = 0;
+        }
+        obj[item.name] += Number(item.number);
+        return obj;
+    }, {})
+    //创建一个新数组map，调用方法累加。
+    return Object.keys(result).map(name => ({name: name, value: result[name]}));
+3、总结：
+  reduce() 是数组的归并方法
+  与forEach()、map()、filter()等迭代方法一样都会对数组每一项进行遍历
+  但是reduce()可同时将前面数组项遍历产生的结果与当前遍历项进行运算
